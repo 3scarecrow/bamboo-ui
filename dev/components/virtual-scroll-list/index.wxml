@@ -1,0 +1,20 @@
+<!--packages/virtual-scroll-list.wxml-->
+<scroll-view
+  wx:if="{{ sourceData.length || loading }}"
+  scroll-y
+  scroll-top="{{ scrollTop }}"
+  style="height: {{ height }}px"
+  enhanced="true"
+  refresher-enabled="{{ refreshEnable }}"
+  refresher-triggered="{{ refresherTriggered }}"
+  show-scrollbar="{{ false }}"
+  bind:scroll="handleScroll"
+  bind:scrolltolower="handleScrollToLower"
+  bind:refresherrefresh="onRefresherrefresh"
+>
+  <view style="height: {{ startIndex * itemSize }}px"></view>
+  <slot></slot>
+  <view style="height: {{ (sourceData.length - endIndex) * itemSize }}px"></view>
+  <slot name="footer"></slot>
+</scroll-view>
+<slot wx:else name="empty"></slot>

@@ -1,0 +1,14 @@
+{
+  "pages":[
+    "pages/virtual-scroll-list/index"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "usingComponents": {
+    "virtual-scroll-list-demo": "./components/virtual-scroll-list/demo/index"
+  }
+}
