@@ -13,7 +13,6 @@ const dist = path.resolve(__dirname, '../lib')
 const components = fs
   .readdirSync(src)
   .map(pkgName => `${pkgName}/index`)
-console.log('components', components)
 
 module.exports = {
   entry: components,
@@ -97,5 +96,5 @@ module.exports = {
     }
   },
 
-  // copy: ['./demo', './utils.js'], // 将会复制到目标目录
+  // copy: ['./common'], // 将会复制到目标目录
 }

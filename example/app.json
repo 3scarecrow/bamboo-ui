@@ -9,6 +9,6 @@
     "navigationBarTextStyle":"black"
   },
   "usingComponents": {
-    "virtual-scroll-list-demo": "./components/virtual-scroll-list/demo/index"
+    "virtual-scroll-list": "./components/virtual-scroll-list/index"
   }
 }

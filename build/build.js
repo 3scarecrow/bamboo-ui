@@ -280,54 +280,6 @@ class BuildTask {
     }))
 
     /**
-     * 拷贝 demo 目标目录
-     */
-    gulp.task(`${id}-copy-demo`, gulp.parallel(done => {
-      // const copyList = this.copyList
-      const components = fs
-        .readdirSync(config.srcPath)
-        .map(pkgName => `${pkgName}`)
-      const copyFileList = components.map(copyFilePath => {
-        try {
-          if (fs.statSync(path.join(srcPath, copyFilePath, 'demo')).isDirectory()) {
-            return path.join(copyFilePath, 'demo', '**/*.!(wxss)')
-          } else {
-            return copyFilePath
-          }
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.error(err)
-          return null
-        }
-      }).filter(copyFilePath => !!copyFilePath)
-
-      if (copyFileList.length) return copy(copyFileList)
-
-      return done()
-    }, done => {
-      const copyList = this.copyList
-      const copyFileList = copyList.map(copyFilePath => {
-        try {
-          if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
-            return path.join(copyFilePath, '**/*.wxss')
-          } else if (copyFilePath.slice(-5) === '.wxss') {
-            return copyFilePath
-          } else {
-            return null
-          }
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.error(err)
-          return null
-        }
-      }).filter(copyFilePath => !!copyFilePath)
-
-      if (copyFileList.length) return wxss(copyFileList, srcPath, distPath)
-
-      return done()
-    }))
-
-    /**
      * 监听 js 变化
      */
     gulp.task(`${id}-watch-js`, done => {
@@ -389,7 +341,6 @@ class BuildTask {
      * 监听 demo 变化
      */
     gulp.task(`${id}-watch-demo`, () => {
-      console.log('xxxxxxx')
       const demoSrc = config.demoSrc
       const demoDist = config.demoDist
       const watchCallback = filePath => gulp.src(filePath, {cwd: demoSrc, base: demoSrc})
@@ -411,10 +362,10 @@ class BuildTask {
      */
     gulp.task(`${id}-build`, gulp.series(`${id}-clean-dist`, `${id}-component-check`, gulp.parallel(`${id}-component-wxml`, `${id}-component-wxss`, `${id}-component-js`, `${id}-component-json`, `${id}-copy`)))
 
-    gulp.task(`${id}-watch`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`, gulp.parallel(`${id}-watch-wxml`, `${id}-watch-wxss`, `${id}-watch-js`, `${id}-watch-json`, `${id}-watch-copy`, `${id}-copy-demo`, `${id}-watch-install`, `${id}-watch-demo`)))
+    gulp.task(`${id}-watch`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`, gulp.parallel(`${id}-watch-wxml`, `${id}-watch-wxss`, `${id}-watch-js`, `${id}-watch-json`, `${id}-watch-copy`, `${id}-watch-install`, `${id}-watch-demo`)))
 
     // 构建 dev
-    gulp.task(`${id}-dev`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-copy-demo`, `${id}-install`))
+    gulp.task(`${id}-dev`, gulp.series(`${id}-build`, `${id}-demo`, `${id}-install`))
 
     gulp.task(`${id}-default`, gulp.series(`${id}-build`))
   }
