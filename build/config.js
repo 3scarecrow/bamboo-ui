@@ -96,5 +96,5 @@ module.exports = {
     }
   },
 
-  // copy: ['./common'], // 将会复制到目标目录
+  copy: ['./wxs'], // 将会复制到目标目录
 }

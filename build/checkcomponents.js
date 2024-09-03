@@ -81,22 +81,23 @@ module.exports = async function (entry) {
 
   const isExists = await _.checkFileExists(entry)
   if (!isExists) {
-    const {dirPath, fileName, fileBase} = getJsonPathInfo(entry)
+    return {}
+    // const {dirPath, fileName, fileBase} = getJsonPathInfo(entry)
 
-    const wholeFileBase = path.join(dirPath, fileName)
-    let jsExt = '.js'
-    const isJsFileExists = await _.checkFileExists(wholeFileBase + '.ts')
-    if (isJsFileExists) {
-      jsExt = '.ts'
-    }
-    componentListMap.jsFileList.push(`${fileBase}${jsExt}`)
-    componentListMap.jsFileMap[fileBase] = `${wholeFileBase}${jsExt}`
+    // const wholeFileBase = path.join(dirPath, fileName)
+    // let jsExt = '.js'
+    // const isJsFileExists = await _.checkFileExists(wholeFileBase + '.ts')
+    // if (isJsFileExists) {
+    //   jsExt = '.ts'
+    // }
+    // componentListMap.jsFileList.push(`${fileBase}${jsExt}`)
+    // componentListMap.jsFileMap[fileBase] = `${wholeFileBase}${jsExt}`
 
-    return componentListMap
+    // return componentListMap
   }
 
   hasCheckCompoenntMap = {}
   await checkIncludedComponents(entry, componentListMap)
-
+  console.log('componentListMap====', componentListMap)
   return componentListMap
 }

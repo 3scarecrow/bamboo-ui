@@ -8,6 +8,7 @@ Page({
     loading: false,
     noMore: false,
     listData: [],
+    refresherTriggered: false,
     // 虚拟列表数据
     startIndex: 0,
     endIndex: 0,
@@ -36,9 +37,17 @@ Page({
   refresh() {
     this.setData({
       noMore: false,
-      listData: []
+      refresherTriggered: true
     })
-    this.load()
+    setTimeout(() => {
+      const { listData } = this.data
+      const noMore = listData.length >= 60
+      this.setData({
+        noMore,
+        refresherTriggered: false,
+        listData: generateData([])
+      })
+    }, 2000)
   },
 
   onVisibleDataChange(e) {

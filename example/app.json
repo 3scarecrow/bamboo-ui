@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/virtual-scroll-list/index"
+    "pages/virtual-list/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -9,6 +9,6 @@
     "navigationBarTextStyle":"black"
   },
   "usingComponents": {
-    "virtual-scroll-list": "./components/virtual-scroll-list/index"
+    "virtual-list": "./components/virtual-list/index"
   }
 }

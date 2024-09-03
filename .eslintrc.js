@@ -56,10 +56,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'node/no-deprecated-api': 'error',
     'node/process-exit-as-throw': 'error',
-    'object-curly-spacing': [
-      'error',
-      'never'
-    ],
+    "object-curly-spacing": ["error","always"],
     'operator-linebreak': [
       'error',
       'after',

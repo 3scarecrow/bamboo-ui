@@ -115,7 +115,7 @@ Component({
       type: Array,
       value: [],
       observer: function observer() {
-        this._refresh(this.data._scrollTop, true);
+        this.calcVisible(this.data._scrollTop);
       }
     },
     itemHeight: {
@@ -124,15 +124,11 @@ Component({
       value: 100,
       observer: function observer(val) {
         this.setData({
-          itemSize: rpxToPx(val)
+          itemHeightValue: rpxToPx(val)
         });
       }
     },
-    height: {
-      type: Number,
-      optionalType: [String],
-      value: 0
-    },
+    height: String,
     startIndex: {
       type: Number,
       value: 0
@@ -141,20 +137,37 @@ Component({
       type: Number,
       value: 0
     },
-    loading: {
-      type: Boolean,
-      value: false,
-      observer: function observer(val) {
-        if (!val) {
-          this.setData({ refresherTriggered: false });
-        }
-      }
+    upperThreshold: {
+      type: Number,
+      optionalType: [String],
+      value: 50
     },
-    // 开启自定义下拉刷新
-    refreshEnable: {
+    lowerThreshold: {
+      type: Number,
+      optionalType: [String],
+      value: 50
+    },
+    showScrollbar: {
       type: Boolean,
       value: true
-    }
+    },
+    refresherEnabled: {
+      type: Boolean,
+      value: false
+    },
+    refresherThreshold: {
+      type: Number,
+      value: 45
+    },
+    refresherTriggered: {
+      type: Boolean,
+      value: false
+    },
+    refresherDefaultStyle: {
+      type: String,
+      value: 'black'
+    },
+    refresherBackground: String
   },
   /**
    * 组件的初始数据
@@ -165,8 +178,7 @@ Component({
     _keeps: 0,
     // 记录数据源变化前的 scrollTop
     _scrollTop: 0,
-    itemSize: 0,
-    refresherTriggered: false
+    itemHeightValue: 0
   },
 
   attached: function attached() {
@@ -182,21 +194,23 @@ Component({
      * 计算可视区域展示项数量
      */
     calcKeeps: function calcKeeps() {
-      var _keeps = Math.ceil(this.data.height / this.data.itemSize);
+      var _data = this.data,
+          height = _data.height,
+          itemHeightValue = _data.itemHeightValue;
+
+      var listHeight = rpxToPx(height);
+      var _keeps = Math.ceil(listHeight / itemHeightValue);
       this.setData({ _keeps: _keeps });
     },
-    scrollToTop: function scrollToTop() {
-      this.setData({ scrollTop: 0, _scrollTop: 0 });
-    },
-    _refresh: function _refresh(scrollTop) {
-      var _data = this.data,
-          sourceData = _data.sourceData,
-          _keeps = _data._keeps;
+    calcVisible: function calcVisible(scrollTop) {
+      var _data2 = this.data,
+          sourceData = _data2.sourceData,
+          _keeps = _data2._keeps;
 
       var maxEndIndex = sourceData.length;
       // 可视区域显示的数据项数量（包含上一屏、当前屏和下一屏的数据），避免滚动白屏
       var visibleSize = Math.min(_keeps * 3, maxEndIndex);
-      var curStart = Math.floor(scrollTop / this.data.itemSize);
+      var curStart = Math.floor(scrollTop / this.data.itemHeightValue);
       var startIndex = Math.max(curStart - _keeps, 0);
       var endIndex = Math.min(startIndex + visibleSize, maxEndIndex);
       if (startIndex > endIndex - visibleSize) {
@@ -206,14 +220,26 @@ Component({
       this.setData({ _scrollTop: scrollTop });
       this.triggerEvent('visibleDataChange', { visibleData: visibleData, startIndex: startIndex, endIndex: endIndex });
     },
-    handleScroll: function handleScroll(event) {
-      this._refresh(event.detail.scrollTop);
+    onScroll: function onScroll(event) {
+      this.calcVisible(event.detail.scrollTop);
     },
-    handleScrollToLower: function handleScrollToLower() {
+    onScrollToLower: function onScrollToLower() {
       this.triggerEvent('scrolltolower');
     },
-    onRefresherrefresh: function onRefresherrefresh() {
+    onRefresh: function onRefresh() {
       this.triggerEvent('refresh');
+    },
+    onPulling: function onPulling() {
+      this.triggerEvent('pulling');
+    },
+    onRestore: function onRestore() {
+      this.triggerEvent('restore');
+    },
+    onAbort: function onAbort() {
+      this.triggerEvent('abort');
+    },
+    scrollTo: function scrollTo(scrollTop) {
+      this.setData({ scrollTop: scrollTop, _scrollTop: scrollTop });
     }
   }
 });

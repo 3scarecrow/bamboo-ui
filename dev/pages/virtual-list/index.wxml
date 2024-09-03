@@ -1,16 +1,23 @@
-<virtual-scroll-list
+<virtual-list
   id="virtual-list"
-  loading="{{ loading }}"
   sourceData="{{ listData }}"
   itemHeight="200rpx"
-  height="600"
+  height="1000rpx"
+  refresher-enabled="{{true}}"
+  refresher-triggered="{{refresherTriggered}}"
+  refresher-default-style="none"
   startIndex="{{ startIndex }}"
   endIndex="{{ endIndex }}"
   bind:visibleDataChange="onVisibleDataChange"
   bind:scrolltolower="load"
   bind:refresh="refresh"
 >
-  <view wx:for="{{visibleData}}" wx:key="id" style="height: 200rpx">
+  <view slot="refresher">刷新</view>
+  <view
+    wx:for="{{visibleData}}"
+    wx:key="id"
+    style="height: 200rpx"
+  >
     <image
       style="width: 200rpx;height: 100%"
       src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"
@@ -24,7 +31,7 @@
     </view>
     <view wx:if="{{loading}}">加载中...</view>
   </view>
-  <view slot="empty">
-    <slot name="empty"></slot>
+  <view slot="empty" style="text-align: center;">
+    暂无数据
   </view>
-</virtual-scroll-list>
+</virtual-list>

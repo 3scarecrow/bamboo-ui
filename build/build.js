@@ -84,7 +84,6 @@ function js(jsFileMap, scope) {
  */
 function copy(copyFileList) {
   if (!copyFileList.length) return false
-
   return gulp.src(copyFileList, {cwd: srcPath, base: srcPath})
     .pipe(_.logger())
     .pipe(gulp.dest(distPath))
@@ -165,8 +164,9 @@ class BuildTask {
       for (let i = 0, len = entries.length; i < len; i++) {
         let entry = entries[i]
         entry = path.join(srcPath, `${entry}.json`)
+        console.log('entry', entry)
         const newComponentListMap = await checkComponents(entry)
-
+        console.log('mergeComponentListMap', mergeComponentListMap, newComponentListMap)
         _.merge(mergeComponentListMap, newComponentListMap)
       }
 
@@ -252,7 +252,7 @@ class BuildTask {
           return null
         }
       }).filter(copyFilePath => !!copyFilePath)
-
+      console.log('copyFileList', copyFileList)
       if (copyFileList.length) return copy(copyFileList)
 
       return done()
