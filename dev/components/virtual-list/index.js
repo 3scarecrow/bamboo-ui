@@ -92,18 +92,7 @@ module.exports =
 "use strict";
 
 
-function isRpx(value) {
-  return (/\d+(\.\d+)?rpx$/.test(value)
-  );
-}
-
-function rpxToPx(value) {
-  // 小程序所有机型屏幕宽度都是 750 rpx，依此进行换算
-  var _value = parseFloat(value);
-  if (Number.isNaN(_value)) return value;
-  if (!isRpx(value)) return _value;
-  return Math.floor(_value / 750 * wx.getWindowInfo().windowWidth);
-}
+var _utils = __webpack_require__(1);
 
 Component({
   options: {
@@ -124,7 +113,7 @@ Component({
       value: 100,
       observer: function observer(val) {
         this.setData({
-          itemHeightValue: rpxToPx(val)
+          itemHeightValue: (0, _utils.rpxToPx)(val)
         });
       }
     },
@@ -198,7 +187,7 @@ Component({
           height = _data.height,
           itemHeightValue = _data.itemHeightValue;
 
-      var listHeight = rpxToPx(height);
+      var listHeight = (0, _utils.rpxToPx)(height);
       var _keeps = Math.ceil(listHeight / itemHeightValue);
       this.setData({ _keeps: _keeps });
     },
@@ -243,6 +232,29 @@ Component({
     }
   }
 });
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.isRpx = isRpx;
+exports.rpxToPx = rpxToPx;
+function isRpx(value) {
+  return (/\d+(\.\d+)?rpx$/.test(value)
+  );
+}
+
+function rpxToPx(value) {
+  // 小程序所有机型屏幕宽度都是 750 rpx，依此进行换算
+  var floatValue = parseFloat(value);
+  if (Number.isNaN(floatValue)) return value;
+  if (!isRpx(value)) return floatValue;
+  return Math.floor(floatValue / 750 * wx.getWindowInfo().windowWidth);
+}
 
 /***/ })
 /******/ ]);

@@ -31,7 +31,7 @@
     </view>
     <view wx:if="{{loading}}">加载中...</view>
   </view>
-  <view slot="empty" style="text-align: center;">
+  <view wx:if="{{ !listData.length && !loading }}" slot="empty" style="text-align: center;">
     暂无数据
   </view>
 </virtual-list>

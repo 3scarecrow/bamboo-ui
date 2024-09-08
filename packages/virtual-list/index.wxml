@@ -21,9 +21,9 @@
   <view slot="refresher">
     <slot name="refresher"></slot>
   </view>
-  <view style="height: {{ utils.addUnit(startIndex * itemHeightValue) }}px"></view>
+  <view style="height: {{ utils.addUnit(startIndex * itemHeightValue) }}"></view>
   <slot></slot>
-  <slot wx:if="{{ sourceData.length}}" name="empty"></slot>
+  <slot name="empty"></slot>
   <view style="height: {{ utils.addUnit((sourceData.length - endIndex) * itemHeightValue) }}"></view>
   <slot name="footer"></slot>
 </scroll-view>

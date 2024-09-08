@@ -1,14 +1,4 @@
-function isRpx(value) {
-  return /\d+(\.\d+)?rpx$/.test(value)
-}
-
-function rpxToPx(value) {
-  // 小程序所有机型屏幕宽度都是 750 rpx，依此进行换算
-  const _value = parseFloat(value)
-  if (Number.isNaN(_value)) return value
-  if (!isRpx(value)) return _value
-  return Math.floor(_value / 750 * wx.getWindowInfo().windowWidth)
-}
+import { rpxToPx } from './utils'
 
 Component({
   options: {

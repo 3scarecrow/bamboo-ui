@@ -1,15 +1,14 @@
-<!--packages/virtual-scroll-list.wxml-->
+<!--packages/virtual-list.wxml-->
 <wxs module="utils" src="../wxs/utils.wxs"></wxs>
 <scroll-view
   scroll-y
   scroll-top="{{ scrollTop }}"
+  show-scrollbar="{{ showScrollbar }}"
   style="height: {{ utils.addUnit(height) }}"
-  enhanced="true"
   refresher-background="{{ refresherBackground }}"
   refresher-default-style="{{ refresherDefaultStyle }}"
   upper-threshold="{{ upperThreshold }}"
   lower-threshold="{{ lowerThreshold }}"
-  show-scrollbar="{{ showScrollbar }}"
   refresher-enabled="{{ refresherEnabled }}"
   refresher-triggered="{{ refresherTriggered }}"
   bind:scroll="onScroll"
@@ -22,9 +21,9 @@
   <view slot="refresher">
     <slot name="refresher"></slot>
   </view>
-  <view style="height: {{ utils.addUnit(startIndex * itemHeightValue) }}px"></view>
+  <view style="height: {{ utils.addUnit(startIndex * itemHeightValue) }}"></view>
   <slot></slot>
-  <slot wx:if="{{ sourceData.length}}" name="empty"></slot>
+  <slot name="empty"></slot>
   <view style="height: {{ utils.addUnit((sourceData.length - endIndex) * itemHeightValue) }}"></view>
   <slot name="footer"></slot>
 </scroll-view>
