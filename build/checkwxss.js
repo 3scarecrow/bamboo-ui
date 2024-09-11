@@ -34,7 +34,7 @@ async function getContent(wxss, filePath, cwd) {
 
     for (const item of currentImportList) {
       // 替换掉 import 语句，不让 less 编译
-      wxss = wxss.replace(item.code, `/* *updated for bamboo-ui* ${item.code} */`)
+      wxss = wxss.replace(item.code, `/* *updated for mini-candy* ${item.code} */`)
 
       // 处理依赖的 wxss
       const importWxss = await _.readFile(item.path)
@@ -86,7 +86,7 @@ module.exports = {
   end() {
     return through.obj(function (file, enc, cb) {
       if (file.isBuffer) {
-        const reg = /\/\*\s\*updated for bamboo-ui\*\s(@import\s+(?:(?:"([^"]+)")|(?:'([^"]+)'));)\s\*\//ig
+        const reg = /\/\*\s\*updated for mini-candy\*\s(@import\s+(?:(?:"([^"]+)")|(?:'([^"]+)'));)\s\*\//ig
         const wxss = file.contents.toString('utf8').replace(reg, (all, $1) => $1)
 
         file.contents = Buffer.from(wxss, 'utf8')
