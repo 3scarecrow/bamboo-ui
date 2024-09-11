@@ -21,7 +21,7 @@ yarn add mini-candy --production
 ```json
 {
   "usingComponents": {
-    "virtual-list": "mini-candy/lib/virtual-list/index"
+    "virtual-list": "mini-candy/virtual-list/index"
   }
 }
 ```
