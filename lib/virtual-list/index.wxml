@@ -12,7 +12,7 @@
   refresher-enabled="{{ refresherEnabled }}"
   refresher-triggered="{{ refresherTriggered }}"
   bind:scroll="onScroll"
-  bind:scrolltolower="onScrollToLower"
+  bind:scrolltolower="onLoad"
   bind:refresherrefresh="onRefresh"
   bind:refresherpulling="onPulling"
   bind:refresherrestore="onRestore"

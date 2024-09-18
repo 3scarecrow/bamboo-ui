@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render demo and match snapshot 1`] = `
+<main>
+  <virtual-list
+    actions="{{
+      Array [
+        Object {
+          "text": "item 1",
+          "value": 1,
+        },
+        Object {
+          "text": "item 2",
+          "value": 2,
+        },
+        Object {
+          "text": "item 3",
+          "type": "warn",
+          "value": 3,
+        },
+      ]
+    }}"
+    cancelText="actionsheet cancel text"
+    class="comp"
+    maskClass="customer-mask-class"
+    show="{{true}}"
+    showCancel="{{true}}"
+    title="actionsheet title"
+    bind:actiontap="actiontap"
+    bind:close="close"
+  />
+</main>
+`;
