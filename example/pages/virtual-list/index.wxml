@@ -9,7 +9,7 @@
   startIndex="{{ startIndex }}"
   endIndex="{{ endIndex }}"
   bind:visibleDataChange="onVisibleDataChange"
-  bind:scrolltolower="load"
+  bind:load="load"
   bind:refresh="refresh"
 >
   <view slot="refresher">刷新</view>
@@ -20,7 +20,7 @@
   >
     <image
       style="width: 200rpx;height: 100%"
-      src="https://res.wx.qq.com/wxdoc/dist/assets/img/0.4cb08bb4.jpg"
+      src="{{item.id % 2 === 1 ? 'http://mmbiz.qpic.cn/sz_mmbiz_jpg/GEWVeJPFkSGTfkSpSbg9cHUqcibBv38r8GXDIVy4W6FN7a1TMWf6RSNQLemKBwG8VqjlxUhicIzz3NTONVrD96ibg/0?wx_fmt=jpeg' : 'http://mmbiz.qpic.cn/sz_mmbiz_png/GEWVeJPFkSGtqYK2JNibbG5KdiaN9ULtZLib0MPjuwicibic9UpVlN3V3GjCZxHrxQicpvJJNuLgRZnevwAudF2Wy5okg/0?wx_fmt=png'}}"
       mode="heightFix"
     />
     {{ item.id }}

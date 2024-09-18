@@ -24,13 +24,10 @@ Component({
       }
     },
     height: String,
-    startIndex: {
-      type: Number,
-      value: 0
-    },
-    endIndex: {
-      type: Number,
-      value: 0
+    // 是否立即执行加载方法，以防初始状态下内容无法撑满容器
+    immediate: {
+      type: Boolean,
+      value: true
     },
     upperThreshold: {
       type: Number,
@@ -68,22 +65,35 @@ Component({
    * 组件的初始数据
    */
   data: {
+    // 控制scroll-view 滚动位置
     scrollTop: 0,
+    itemHeightValue: 0,
+    startIndex: 0,
+    endIndex: 0,
     // 可视区域展示多少项
     _keeps: 0,
     // 记录数据源变化前的 scrollTop
     _scrollTop: 0,
-    itemHeightValue: 0
   },
 
   attached() {
     this.calcKeeps()
+    if (this.data.immediate) {
+      this.check()
+    }
   },
 
   /**
    * 组件的方法列表
    */
   methods: {
+    check() {
+      const { height, endIndex, itemHeightValue } = this.data
+      const listHeight = rpxToPx(height)
+      if ((endIndex + 1) * itemHeightValue <= listHeight) {
+        this.triggerEvent('load')
+      }
+    },
     /**
      * 计算可视区域展示项数量
      */
@@ -106,7 +116,7 @@ Component({
         startIndex = endIndex - visibleSize
       }
       const visibleData = sourceData.slice(startIndex, endIndex)
-      this.setData({ _scrollTop: scrollTop })
+      this.setData({ _scrollTop: scrollTop, startIndex, endIndex })
       this.triggerEvent('visibleDataChange', { visibleData, startIndex, endIndex })
     },
 
@@ -114,8 +124,8 @@ Component({
       this.calcVisible(event.detail.scrollTop)
     },
 
-    onScrollToLower() {
-      this.triggerEvent('scrolltolower')
+    onLoad() {
+      this.triggerEvent('load')
     },
 
     onRefresh() {

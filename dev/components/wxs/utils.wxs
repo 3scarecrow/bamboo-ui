@@ -1,6 +1,0 @@
-/* eslint-disable */
-var addUnit = require('./add-unit.wxs')
-
-module.exports = {
-  addUnit: addUnit
-}

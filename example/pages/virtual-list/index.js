@@ -1,7 +1,10 @@
 
-const generateData = (data) => Array.from({length: 10}).map((_, i) => ({
-  id: data.length + i + 1
-}))
+const generateData = (data) => {
+  const newDatas = Array.from({ length: 4 })
+  return newDatas.map((_, i) => ({
+    id: data.length + i + 1
+  }))
+}
 
 Page({
   data: {
@@ -10,8 +13,6 @@ Page({
     listData: [],
     refresherTriggered: false,
     // 虚拟列表数据
-    startIndex: 0,
-    endIndex: 0,
     visibleData: [],
   },
 
@@ -51,7 +52,7 @@ Page({
   },
 
   onVisibleDataChange(e) {
-    const { visibleData, startIndex, endIndex } = e.detail
-    this.setData({ visibleData, startIndex, endIndex })
+    const { visibleData } = e.detail
+    this.setData({ visibleData })
   }
 })
