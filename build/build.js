@@ -19,6 +19,7 @@ const jsConfig = config.js || {}
 const wxssConfig = config.wxss || {}
 const srcPath = config.srcPath
 const distPath = config.distPath
+const dynamicNameReg = /\[([^\]]+)?\]/g
 
 /**
  * 获取 wxss 流
@@ -109,6 +110,13 @@ function install() {
   })
 }
 
+function replace(filePath, packageList) {
+  if (!dynamicNameReg.test(filePath)) return [filePath]
+  return packageList.map(packageNam => filePath.replace(/\[([^\]]+)?\]/g, function () {
+    return packageNam || ''
+  }))
+}
+
 class BuildTask {
   constructor(id, entry) {
     if (!entry) return
@@ -164,9 +172,7 @@ class BuildTask {
       for (let i = 0, len = entries.length; i < len; i++) {
         let entry = entries[i]
         entry = path.join(srcPath, `${entry}.json`)
-        console.log('entry', entry)
         const newComponentListMap = await checkComponents(entry)
-        console.log('mergeComponentListMap', mergeComponentListMap, newComponentListMap)
         _.merge(mergeComponentListMap, newComponentListMap)
       }
 
@@ -238,7 +244,12 @@ class BuildTask {
      * 拷贝相关资源到目标目录
      */
     gulp.task(`${id}-copy`, gulp.parallel(done => {
-      const copyList = this.copyList
+      const copyList = this.copyList.reduce((prev, filePath) => {
+        const paths = replace(filePath, this.componentListMap.packageList)
+        prev.push(...paths)
+        return prev
+      }, [])
+      console.log('copyList', copyList)
       const copyFileList = copyList.map(copyFilePath => {
         try {
           if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {
@@ -252,7 +263,6 @@ class BuildTask {
           return null
         }
       }).filter(copyFilePath => !!copyFilePath)
-      console.log('copyFileList', copyFileList)
       if (copyFileList.length) return copy(copyFileList)
 
       return done()

@@ -28,7 +28,7 @@ async function checkIncludedComponents(jsonPath, componentListMap) {
   const json = _.readJson(jsonPath)
   if (!json) throw new Error(`json is not valid: "${jsonPath}"`)
 
-  const {dirPath, fileName, fileBase} = getJsonPathInfo(jsonPath)
+  const {dirPath, fileName, fileBase, relative} = getJsonPathInfo(jsonPath)
   if (hasCheckCompoenntMap[fileBase]) return
   hasCheckCompoenntMap[fileBase] = true
 
@@ -65,6 +65,7 @@ async function checkIncludedComponents(jsonPath, componentListMap) {
   componentListMap.wxssFileList.push(`${fileBase}.wxss`)
   componentListMap.jsonFileList.push(`${fileBase}.json`)
   componentListMap.jsFileList.push(`${fileBase}${jsExt}`)
+  componentListMap.packageList.push(`${relative}`)
 
   componentListMap.jsFileMap[fileBase] = `${wholeFileBase}${jsExt}`
 }
@@ -75,6 +76,7 @@ module.exports = async function (entry) {
     wxssFileList: [],
     jsonFileList: [],
     jsFileList: [],
+    packageList: [],
 
     jsFileMap: {}, // 为 webpack entry 所用
   }
@@ -98,6 +100,5 @@ module.exports = async function (entry) {
 
   hasCheckCompoenntMap = {}
   await checkIncludedComponents(entry, componentListMap)
-  console.log('componentListMap====', componentListMap)
   return componentListMap
 }
