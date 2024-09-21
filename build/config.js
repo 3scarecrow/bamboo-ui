@@ -5,7 +5,7 @@ const nodeExternals = require('webpack-node-externals')
 const isDev = process.argv.indexOf('--develop') >= 0
 const isWatch = process.argv.indexOf('--watch') >= 0
 const demoSrc = path.resolve(__dirname, '../example')
-const demoDist = path.resolve(__dirname, '../dev')
+const demoDist = path.resolve(__dirname, '../dist')
 const src = path.resolve(__dirname, '../packages')
 const dev = path.join(demoDist, 'components')
 const dist = path.resolve(__dirname, '../lib')

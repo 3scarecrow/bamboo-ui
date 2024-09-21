@@ -325,7 +325,11 @@ class BuildTask {
      * 监听相关资源变化
      */
     gulp.task(`${id}-watch-copy`, () => {
-      const copyList = this.copyList
+      const copyList = this.copyList.reduce((prev, filePath) => {
+        const paths = replace(filePath, this.componentListMap.packageList)
+        prev.push(...paths)
+        return prev
+      }, [])
       const copyFileList = copyList.map(copyFilePath => {
         try {
           if (fs.statSync(path.join(srcPath, copyFilePath)).isDirectory()) {

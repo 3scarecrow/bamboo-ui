@@ -1,7 +1,7 @@
 <virtual-list
   id="virtual-list"
   sourceData="{{ listData }}"
-  itemHeight="200rpx"
+  itemHeight="250rpx"
   height="1000rpx"
   refresher-enabled="{{true}}"
   refresher-triggered="{{refresherTriggered}}"

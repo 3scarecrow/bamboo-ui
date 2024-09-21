@@ -5,29 +5,32 @@ Component({
     pureDataPattern: /^_/,
     multipleSlots: true
   },
+
   properties: {
     sourceData: {
       type: Array,
-      value: [],
-      observer() {
-        this.calcVisible(this.data._scrollTop)
-      }
+      value: []
     },
     itemHeight: {
       type: String,
       optionalType: [Number],
-      value: 100,
-      observer(val) {
-        this.setData({
-          itemHeightValue: rpxToPx(val)
-        })
-      }
+      value: 100
     },
     height: String,
-    // 是否立即执行加载方法，以防初始状态下内容无法撑满容器
-    immediate: {
+    // 是否立即执行 check 方法，以防初始状态下内容无法撑满容器
+    immediateCheck: {
       type: Boolean,
       value: true
+    },
+    // 是否间隔执行 check 方法，以防止内容无法撑满容器
+    intervalCheck: {
+      type: Boolean,
+      value: false
+    },
+    // 检查间隔
+    checkDelay: {
+      type: Number,
+      value: 1000
     },
     upperThreshold: {
       type: Number,
@@ -61,9 +64,7 @@ Component({
     },
     refresherBackground: String
   },
-  /**
-   * 组件的初始数据
-   */
+
   data: {
     // 控制scroll-view 滚动位置
     scrollTop: 0,
@@ -76,24 +77,43 @@ Component({
     _scrollTop: 0,
   },
 
-  attached() {
-    this.calcKeeps()
-    if (this.data.immediate) {
-      this.check()
+  observers: {
+    sourceData() {
+      this.calcVisible(this.data._scrollTop)
+    },
+    itemHeight(value) {
+      this.setData({
+        itemHeightValue: rpxToPx(value)
+      })
     }
   },
 
-  /**
-   * 组件的方法列表
-   */
+  attached() {
+    this.calcKeeps()
+    if (this.data.immediateCheck) {
+      this.check()
+    } else if (this.data.intervalCheck) {
+      this._timer = setInterval(this.check.bind(this), this.data.checkDelay)
+    }
+  },
+
+  detached() {
+    if (this._timer) {
+      clearInterval(this._timer)
+    }
+  },
+
   methods: {
     check() {
       const { height, endIndex, itemHeightValue } = this.data
       const listHeight = rpxToPx(height)
-      if ((endIndex + 1) * itemHeightValue <= listHeight) {
-        this.triggerEvent('load')
+      if ((endIndex + 1) * itemHeightValue > listHeight) {
+        clearInterval(this._timer)
+        return
       }
+      this.triggerEvent('load')
     },
+
     /**
      * 计算可视区域展示项数量
      */

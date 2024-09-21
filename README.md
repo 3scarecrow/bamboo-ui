@@ -42,4 +42,4 @@ npm install
 npm run dev
 ```
 
-打开[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)，把`mini-candy/dev`目录添加进去就可以预览示例了。
+打开[微信开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)，把`mini-candy/dist`目录添加进去就可以预览示例了。

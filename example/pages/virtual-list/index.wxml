@@ -1,4 +1,4 @@
-<virtual-list
+<virtual-list-demo
   id="virtual-list"
   sourceData="{{ listData }}"
   itemHeight="200rpx"
@@ -34,4 +34,4 @@
   <view wx:if="{{ !listData.length && !loading }}" slot="empty" style="text-align: center;">
     暂无数据
   </view>
-</virtual-list>
+</virtual-list-demo>
