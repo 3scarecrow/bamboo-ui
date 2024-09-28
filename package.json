@@ -17,7 +17,7 @@
     "clean": "gulp clean",
     "test": "jest",
     "test-debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --runInBand --bail",
-    "coverage": "jest ./test/* --coverage --bail",
+    "coverage": "jest ./packages/* --coverage --bail",
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint-build": "eslint \"build/**/*.js\" --rule \"import/no-extraneous-dependencies: false\" --fix"
   },
@@ -37,6 +37,8 @@
     "url": "https://github.com/3scarecrow/mini-candy.git"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.24.8",
+    "@babel/preset-env": "^7.25.4",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "babel-core": "^6.26.3",

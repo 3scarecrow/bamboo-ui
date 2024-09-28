@@ -3,31 +3,36 @@
 exports[`should render demo and match snapshot 1`] = `
 <main>
   <virtual-list
-    actions="{{
-      Array [
-        Object {
-          "text": "item 1",
-          "value": 1,
-        },
-        Object {
-          "text": "item 2",
-          "value": 2,
-        },
-        Object {
-          "text": "item 3",
-          "type": "warn",
-          "value": 3,
-        },
-      ]
-    }}"
-    cancelText="actionsheet cancel text"
-    class="comp"
-    maskClass="customer-mask-class"
-    show="{{true}}"
-    showCancel="{{true}}"
-    title="actionsheet title"
-    bind:actiontap="actiontap"
-    bind:close="close"
-  />
+    endIndex=""
+    height="1000rpx"
+    id="virtual-list"
+    itemHeight="250rpx"
+    refresherDefaultStyle="none"
+    refresherEnabled="{{true}}"
+    refresherTriggered="{{false}}"
+    sourceData="{{Array []}}"
+    startIndex=""
+    bind:load="load"
+    bind:refresh="refresh"
+    bind:visibleDataChange="onVisibleDataChange"
+  >
+    <wx-view
+      slot="refresher"
+    >
+      刷新
+    </wx-view>
+    <wx-view
+      slot="footer"
+      style="text-align: center;"
+    />
+    <wx-view
+      slot="empty"
+      style="text-align: center;"
+    >
+      
+    暂无数据
+  
+    </wx-view>
+  </virtual-list>
 </main>
 `;
