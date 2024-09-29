@@ -7,7 +7,7 @@ const isWatch = process.argv.indexOf('--watch') >= 0
 const demoSrc = path.resolve(__dirname, '../example')
 const demoDist = path.resolve(__dirname, '../dist')
 const src = path.resolve(__dirname, '../packages')
-const dev = path.join(demoDist, 'components')
+const dev = path.join(demoDist, 'packages')
 const dist = path.resolve(__dirname, '../lib')
 
 const components = fs

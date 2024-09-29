@@ -21,17 +21,6 @@
     "lint": "eslint \"src/**/*.js\" --fix",
     "lint-build": "eslint \"build/**/*.js\" --rule \"import/no-extraneous-dependencies: false\" --fix"
   },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "testURL": "https://jest.test",
-    "collectCoverageFrom": [
-      "lib/**/*.js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "lib"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/3scarecrow/mini-candy.git"
@@ -44,7 +33,6 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-module-resolver": "^3.2.0",
-    "babel-preset-env": "^1.7.0",
     "colors": "^1.3.1",
     "eslint": "^5.14.1",
     "eslint-config-airbnb-base": "13.1.0",
