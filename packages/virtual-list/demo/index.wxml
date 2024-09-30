@@ -1,25 +1,22 @@
 <virtual-list
-  id="virtual-list"
-  sourceData="{{ listData }}"
-  itemHeight="250rpx"
   height="1000rpx"
+  itemHeight="250rpx"
+  sourceData="{{ listData }}"
   refresher-enabled="{{true}}"
-  refresher-triggered="{{refresherTriggered}}"
   refresher-default-style="none"
-  startIndex="{{ startIndex }}"
-  endIndex="{{ endIndex }}"
-  bind:visibleDataChange="onVisibleDataChange"
+  refresher-triggered="{{refresherTriggered}}"
   bind:load="load"
   bind:refresh="refresh"
+  bind:visibleDataChange="visibleDataChange"
 >
   <view slot="refresher">刷新</view>
   <view
     wx:for="{{visibleData}}"
     wx:key="id"
-    style="height: 200rpx"
+    style="height: 250rpx"
   >
     <image
-      style="width: 200rpx;height: 100%"
+      style="width: 250rpx;height: 100%"
       src="{{item.id % 2 === 1 ? 'http://mmbiz.qpic.cn/sz_mmbiz_jpg/GEWVeJPFkSGTfkSpSbg9cHUqcibBv38r8GXDIVy4W6FN7a1TMWf6RSNQLemKBwG8VqjlxUhicIzz3NTONVrD96ibg/0?wx_fmt=jpeg' : 'http://mmbiz.qpic.cn/sz_mmbiz_png/GEWVeJPFkSGtqYK2JNibbG5KdiaN9ULtZLib0MPjuwicibic9UpVlN3V3GjCZxHrxQicpvJJNuLgRZnevwAudF2Wy5okg/0?wx_fmt=png'}}"
       mode="heightFix"
     />

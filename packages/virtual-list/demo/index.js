@@ -47,7 +47,7 @@ Component({
       }, 2000)
     },
   
-    onVisibleDataChange(e) {
+    visibleDataChange(e) {
       const { visibleData } = e.detail
       this.setData({ visibleData })
     }
